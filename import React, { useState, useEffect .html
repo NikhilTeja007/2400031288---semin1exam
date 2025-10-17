@@ -1,0 +1,49 @@
+import React, { useState, useEffect } from "react";
+
+export default function ThemeToggle() {
+  // Load theme from localStorage or default to 'light'
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "light";
+  });
+
+  // Update localStorage whenever theme changes
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.body.className = theme; // Apply theme to body
+  }, [theme]);
+
+  // Toggle between light and dark
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  return (
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        backgroundColor: theme === "light" ? "#f9f9f9" : "#222",
+        color: theme === "light" ? "#000" : "#fff",
+        transition: "all 0.3s ease",
+      }}
+    >
+      <h1>{theme === "light" ? "🌞 Light Theme" : "🌙 Dark Theme"}</h1>
+      <button
+        onClick={toggleTheme}
+        style={{
+          padding: "10px 20px",
+          borderRadius: "8px",
+          border: "none",
+          cursor: "pointer",
+          backgroundColor: theme === "light" ? "#333" : "#fff",
+          color: theme === "light" ? "#fff" : "#333",
+        }}
+      >
+        Toggle Theme
+      </button>
+    </div>
+  );
+}
